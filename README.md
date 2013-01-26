@@ -22,7 +22,7 @@ Default options:
     'default': 'default value',
     // Automatically trim the input
     'trim': true,
-    // An validator or an array of validators.
+    // A validator or an array of validators.
     'validator': null,
     // Automatically retry on error
     'retry': false,
@@ -126,7 +126,7 @@ The available options are the same, except that `trim` defauls to `false`.
 promply.password('password: ', function (err, value) {
     console.log('password is ' + value);
 });
-```
+``
 
 
 ## License ##
