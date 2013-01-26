@@ -3,6 +3,9 @@
 
 Simple command line prompting utility.
 
+## Installation ##
+
+npm install promptly
 
 
 ## API ##

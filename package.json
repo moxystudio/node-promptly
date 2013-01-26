@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git://github.com/IndigoUnited/node-promptly"
   },
+  "bugs": {
+    "url" : "http://github.com/IndigoUnited/node-promptly/issues"
+  },
   "keywords": [
     "prompt",
     "choose",
