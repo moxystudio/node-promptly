@@ -46,26 +46,13 @@ Example usages:
 
 Ask for a name.
 ```js
-promptly.prompt('name: ', function (err, value) {
-    if (err) {
-        console.log('invalid name');
-        // Manually call retry
-        // The passed errors have a retry method to easily prompt again.
-        return err.retry();
-    }
-
+promptly.prompt('Name: ', function (err, value) {
+    // err is always null in this case, because no validators are set
     console.log(value);
 });
 ```
 
-Ask for a name until it validates (non-empty value).
-```js
-promptly.prompt('name: ', { retry: true }, function (err, value) {
-    console.log(value);
-});
-```
-
-Ask for a name until it validates (non-empty value and length > 2).
+Ask for a name with a constraint (non-empty value and length > 2)
 ```js
 var validator = function (value) {
     if (value.length < 2) {
@@ -75,11 +62,34 @@ var validator = function (value) {
     return value;
 }
 
-promptly.prompt('name: ', { retry: true, validator: validator }, function (err, value) {
-    console.log(value);
+promptly.prompt('Name: ', { validator: validator }, function (err, value) {
+    if (err) {
+        console.error('Invalid name');
+        // Manually call retry
+        // The passed errors have a retry method to easily prompt again.
+        err.retry();
+    }
+
+    console.log('Name is: ', value);
 });
 ```
 
+Same as above but retry automatically
+
+```js
+var validator = function (value) {
+    if (value.length < 2) {
+        throw new Error('Min length of 2');
+    }
+
+    return value;
+}
+
+promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, value) {
+    // err is always null because the promptly will keep asking for a name until it validates
+    console.log('Name is: ', value);
+});
+```
 
 
 ### .confirm(message, opts, fn) ###
