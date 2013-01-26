@@ -126,7 +126,7 @@ The available options are the same, except that `trim` defauls to `false`.
 promply.password('password: ', function (err, value) {
     console.log('password is ' + value);
 });
-``
+```
 
 
 ## License ##
