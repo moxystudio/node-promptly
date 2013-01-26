@@ -25,7 +25,10 @@ Default options:
     // A validator or an array of validators.
     'validator': null,
     // Automatically retry if a validator fails
-    'retry': false
+    'retry': false,
+    // Input and output streams to read and write to
+    'input': process.stdin,
+    'output': process.stdout
 }
 ```
 
