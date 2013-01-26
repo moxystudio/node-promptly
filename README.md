@@ -29,7 +29,6 @@ Default options:
 }
 ```
 
-
 The validators have two purposes:
 ```js
 function (value) {
@@ -57,14 +56,12 @@ promptly.prompt('name: ', function (err, value) {
 });
 ```
 
-
 The example bellow will keep asking a the name until it validates (non-empty value).
 ```js
 promptly.prompt('name: ', { retry: true }, function (err, value) {
     console.log(value);
 });
 ```
-
 
 The example bellow will keep asking a the name until it validates (non-empty value and length > 2).
 ```js
@@ -89,10 +86,17 @@ Ask the user to confirm something.
 Calls `fn` with an `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defauls to `true`.   
-Truthy values are: `y`, `1` and `true`.   
-Falsy values are `n`, `0` and `false`.   
+Truthy values are: `y`, `1` and `true`.
+Falsy values are `n`, `0` and `false`.
 Comparison is made in case insensitive way.
 
+Example usage:
+
+```js
+promply.confirm('Are you sure? ', function (err, value) {
+    console.log('Answer: ', value);
+});
+```
 
 
 ### .choose(message, choices, opts, fn) ###
@@ -103,6 +107,12 @@ Calls `fn` with an `error` and `value` (true or false).
 The available options are the same, except that `retry` defauls to `true`.
 
 
+```js
+promply.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
+    console.log('Answer: ', value);
+});
+```
+
 
 ### .password(message, opts, fn) ###
 
@@ -110,6 +120,12 @@ Prompts for a password, printing the `message` and waiting for the input.
 When available, calls `fn` with an `error` and `value`.   
 
 The available options are the same, except that `trim` defauls to `false`.
+
+
+```js
+promply.password('password: ', function (err, value) {
+    console.log('password is ' + value);
+});
 
 
 
