@@ -40,7 +40,7 @@ function (value) {
     // Parse the value, modifying it
     return value.replace('aa', 'bb');
 }
-
+```
 
 Example usage:
 
