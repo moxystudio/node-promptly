@@ -86,8 +86,8 @@ Ask the user to confirm something.
 Calls `fn` with an `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defauls to `true`.   
-Truthy values are: `y`, `1` and `true`.
-Falsy values are `n`, `0` and `false`.
+Truthy values are: `y`, `yes`, `1` and `true`.
+Falsy values are `n`, `no`, `0` and `false`.
 Comparison is made in case insensitive way.
 
 Example usage:
