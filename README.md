@@ -60,7 +60,7 @@ var validator = function (value) {
     }
 
     return value;
-}
+};
 
 promptly.prompt('Name: ', { validator: validator }, function (err, value) {
     if (err) {
@@ -83,7 +83,7 @@ var validator = function (value) {
     }
 
     return value;
-}
+};
 
 promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, value) {
     // err is always null because promptly will be prompting for a name until it validates
