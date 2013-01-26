@@ -13,7 +13,7 @@ In all the commands, the options argument is not mandatory.
 ### .prompt(message, opts, fn) ###
 
 Prompts for a value, printing the `message` and waiting for the input.   
-When done, calls `fn` with an `error` and `value`.
+When done, calls `fn` with `error` and `value`.
 
 Default options:
 ```js
@@ -85,7 +85,7 @@ promptly.prompt('name: ', { retry: true, validator: validator }, function (err, 
 ### .confirm(message, opts, fn) ###
 
 Ask the user to confirm something.   
-Calls `fn` with an `error` and `value` (true or false).
+Calls `fn` with `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defauls to `true`.   
 Truthy values are: `y`, `yes`, `1` and `true`.
@@ -104,7 +104,7 @@ promply.confirm('Are you sure? ', function (err, value) {
 ### .choose(message, choices, opts, fn) ###
 
 Ask the user to choose between multiple `choices` (array of choices).   
-Calls `fn` with an `error` and `value` (true or false).   
+Calls `fn` with `error` and `value` (true or false).   
 
 The available options are the same, except that `retry` defauls to `true`.
 
@@ -119,7 +119,7 @@ promply.choose('Do you want an apple or an orange? ', ['apple', 'orange'], funct
 ### .password(message, opts, fn) ###
 
 Prompts for a password, printing the `message` and waiting for the input.   
-When available, calls `fn` with an `error` and `value`.   
+When available, calls `fn` with `error` and `value`.   
 
 The available options are the same, except that `trim` defauls to `false`.
 
