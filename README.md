@@ -12,7 +12,7 @@ In all the commands, the options argument is not mandatory.
 
 ### .prompt(message, opts, fn) ###
 
-Prompts for a value, printing the `message` and waiting for the input.
+Prompts for a value, printing the `message` and waiting for the input.   
 When done, calls `fn` with an `error` and `value`.
 
 Default options:
@@ -27,6 +27,8 @@ Default options:
     // Automatically retry on error
     'retry': false,
 }
+```
+
 
 The validators have two purposes:
 ```js
@@ -39,6 +41,7 @@ function (value) {
     // Parse the value, modifying it
     return value.replace('aa', 'bb');
 }
+
 
 Example usage:
 
@@ -54,12 +57,14 @@ promptly.prompt('name: ', function (err, value) {
 });
 ```
 
+
 The example bellow will keep asking a the name until it validates (non-empty value).
 ```js
 promptly.prompt('name: ', { retry: true }, function (err, value) {
     console.log(value);
 });
 ```
+
 
 The example bellow will keep asking a the name until it validates (non-empty value and length > 2).
 ```js
@@ -80,20 +85,20 @@ promptly.prompt('name: ', { retry: true, validator: validator }, function (err, 
 
 ### .confirm(message, opts, fn) ###
 
-Ask the user to confirm something.
+Ask the user to confirm something.   
 Calls `fn` with an `error` and `value` (true or false).
 
-The available options are the same, except that `retry` defauls to `true`.
-Truthy values are: `y`, `1` and `true`.
-Falsy values are `n`, `0` and `false`.
+The available options are the same, except that `retry` defauls to `true`.   
+Truthy values are: `y`, `1` and `true`.   
+Falsy values are `n`, `0` and `false`.   
 Comparison is made in case insensitive way.
 
 
 
 ### .choose(message, choices, opts, fn) ###
 
-Ask the user to choose between multiple `choices` (array of choices).
-Calls `fn` with an `error` and `value` (true or false).
+Ask the user to choose between multiple `choices` (array of choices).   
+Calls `fn` with an `error` and `value` (true or false).   
 
 The available options are the same, except that `retry` defauls to `true`.
 
@@ -101,8 +106,8 @@ The available options are the same, except that `retry` defauls to `true`.
 
 ### .password(message, opts, fn) ###
 
-Prompts for a password, printing the `message` and waiting for the input.
-When available, calls `fn` with an `error` and `value`.
+Prompts for a password, printing the `message` and waiting for the input.   
+When available, calls `fn` with an `error` and `value`.   
 
 The available options are the same, except that `trim` defauls to `false`.
 
