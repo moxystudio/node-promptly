@@ -118,6 +118,7 @@ Calls `fn` with `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defauls to `true`.
 
+Example usage:
 
 ```js
 promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
@@ -133,10 +134,11 @@ When available, calls `fn` with `error` and `value`.
 
 The available options are the same, except that `trim` defauls to `false`.
 
+Example usage:
 
 ```js
-promptly.password('password: ', function (err, value) {
-    console.log('password is ' + value);
+promptly.password('Type a password: ', function (err, value) {
+    console.log('Password is ' + value);
 });
 ```
 
