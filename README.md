@@ -24,7 +24,7 @@ Default options:
     'trim': true,
     // A validator or an array of validators.
     'validator': null,
-    // Automatically retry on error
+    // Automatically retry if a validator fails
     'retry': false
 }
 ```
@@ -42,9 +42,9 @@ function (value) {
 }
 ```
 
-Example usages:
+Example usages
 
-Ask for a name.
+Ask for a name:
 ```js
 promptly.prompt('Name: ', function (err, value) {
     // err is always null in this case, because no validators are set
@@ -52,7 +52,7 @@ promptly.prompt('Name: ', function (err, value) {
 });
 ```
 
-Ask for a name with a constraint (non-empty value and length > 2)
+Ask for a name with a constraint (non-empty value and length > 2):
 ```js
 var validator = function (value) {
     if (value.length < 2) {
@@ -74,7 +74,7 @@ promptly.prompt('Name: ', { validator: validator }, function (err, value) {
 });
 ```
 
-Same as above but retry automatically
+Same as above but retry automatically:
 
 ```js
 var validator = function (value) {
@@ -138,7 +138,7 @@ Example usage:
 
 ```js
 promptly.password('Type a password: ', function (err, value) {
-    console.log('Password is ' + value);
+    console.log('Password is', value);
 });
 ```
 
