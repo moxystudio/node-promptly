@@ -66,7 +66,7 @@ promptly.prompt('Name: ', { validator: validator }, function (err, value) {
     if (err) {
         console.error('Invalid name');
         // Manually call retry
-        // The passed errors have a retry method to easily prompt again.
+        // The passed error have a retry method to easily prompt again.
         err.retry();
     }
 
@@ -86,7 +86,7 @@ var validator = function (value) {
 }
 
 promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, value) {
-    // err is always null because the promptly will keep asking for a name until it validates
+    // err is always null because promptly will prompting for a name until it validates
     console.log('Name is: ', value);
 });
 ```
