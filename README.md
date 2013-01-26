@@ -42,28 +42,30 @@ function (value) {
 }
 ```
 
-Example usage:
+Example usages:
 
-The example bellow will ask for a name.
+Ask for a name.
 ```js
 promptly.prompt('name: ', function (err, value) {
     if (err) {
         console.log('invalid name');
-        return err.retry(); // Manually call retry
+        // Manually call retry
+        // The passed errors have a retry method to easily prompt again.
+        return err.retry();
     }
 
     console.log(value);
 });
 ```
 
-The example bellow will keep asking a the name until it validates (non-empty value).
+Ask for a name until it validates (non-empty value).
 ```js
 promptly.prompt('name: ', { retry: true }, function (err, value) {
     console.log(value);
 });
 ```
 
-The example bellow will keep asking a the name until it validates (non-empty value and length > 2).
+Ask for a name until it validates (non-empty value and length > 2).
 ```js
 var validator = function (value) {
     if (value.length < 2) {
