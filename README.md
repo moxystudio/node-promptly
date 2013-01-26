@@ -25,7 +25,7 @@ Default options:
     // A validator or an array of validators.
     'validator': null,
     // Automatically retry on error
-    'retry': false,
+    'retry': false
 }
 ```
 
