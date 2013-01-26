@@ -95,7 +95,7 @@ Comparison is made in case insensitive way.
 Example usage:
 
 ```js
-promply.confirm('Are you sure? ', function (err, value) {
+promptly.confirm('Are you sure? ', function (err, value) {
     console.log('Answer: ', value);
 });
 ```
@@ -110,7 +110,7 @@ The available options are the same, except that `retry` defauls to `true`.
 
 
 ```js
-promply.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
+promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
     console.log('Answer: ', value);
 });
 ```
@@ -125,7 +125,7 @@ The available options are the same, except that `trim` defauls to `false`.
 
 
 ```js
-promply.password('password: ', function (err, value) {
+promptly.password('password: ', function (err, value) {
     console.log('password is ' + value);
 });
 ```
