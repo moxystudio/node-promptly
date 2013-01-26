@@ -1,7 +1,7 @@
 # promptly #
 ---
 
-Simple command line prompting utilify.
+Simple command line prompting utility.
 
 
 
