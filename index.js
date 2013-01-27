@@ -1,6 +1,6 @@
 'use strict';
 
-var readline = require('readline');
+var read = require('read');
 var promptly = module.exports;
 
 promptly.prompt = function (message, opts, fn) {
@@ -16,17 +16,22 @@ promptly.prompt = function (message, opts, fn) {
         opts.trim = true;
     }
 
-    // Instantiate node's readline
-    var rl = opts.rl;
-    if (!rl) {
-        rl = opts.rl = readline.createInterface({
-            input: opts.input || process.stdin,
-            output: opts.output || process.stdout
-        });
-    }
+    // Setup read's options
+    var readOpts = {
+        prompt: message,
+        stdin: opts.input || process.stdin,
+        stdout: opts.output || process.stdout,
+        silent: opts.silent
+    };
 
     // Use readline question
-    rl.question(message, function (response) {
+    read(readOpts, function (err, response) {
+        // Ignore the error attribute
+        // It is set on SIGINT or if timeout reached (we are not using timeout)
+        if (err) {
+            return;
+        }
+
         // Trim?
         if (opts.trim) {
             response = response.trim();
@@ -57,8 +62,6 @@ promptly.prompt = function (message, opts, fn) {
                         return promptly.prompt(message, opts, fn);
                     }
 
-                    rl.close();
-                    delete opts.rl;
                     e.retry = promptly.prompt.bind(promptly, message, opts, fn);
 
                     return fn(e);
@@ -67,13 +70,29 @@ promptly.prompt = function (message, opts, fn) {
         }
 
         // Everything ok
-        rl.close();
         fn(null, response);
     });
 };
 
-promptly.password = function () {
-    // TODO:
+promptly.password = function (message, opts, fn) {
+    // Arguments parsing
+    if (typeof opts === 'function') {
+        fn = opts;
+        opts = {};
+    } else {
+        opts = opts || {};
+    }
+
+    // Set default options
+    if (opts.silent === undefined) {
+        opts.silent = true;
+    }
+    if (opts.trim === undefined) {
+        opts.trim = false;
+    }
+
+    // Use prompt()
+    promptly.prompt(message, opts, fn);
 };
 
 promptly.confirm = function (message, opts, fn) {
@@ -113,7 +132,7 @@ promptly.confirm = function (message, opts, fn) {
     };
     opts.validator.push(validator);
 
-    // Use choose with true, false
+    // Use choose() with true, false
     promptly.choose(message, [true, false], opts, fn);
 };
 
@@ -126,12 +145,14 @@ promptly.choose = function (message, choices, opts, fn) {
         opts = opts || {};
     }
 
-    if (opts.retry === undefined) {
-        opts.retry = true;
-    }
     opts.validator = opts.validator || [];
     if (!Array.isArray(opts.validator)) {
         opts.validator = [opts.validator];
+    }
+
+    // Set the default options
+    if (opts.retry === undefined) {
+        opts.retry = true;
     }
 
     // Push the choice validator

@@ -16,7 +16,7 @@
     "url": "git://github.com/IndigoUnited/node-promptly"
   },
   "bugs": {
-    "url" : "http://github.com/IndigoUnited/node-promptly/issues"
+    "url": "http://github.com/IndigoUnited/node-promptly/issues"
   },
   "keywords": [
     "prompt",
@@ -27,5 +27,8 @@
     "line"
   ],
   "author": "IndigoUnited <hello@indigounited.com> (http://indigounited.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "read": "~1.0.4"
+  }
 }

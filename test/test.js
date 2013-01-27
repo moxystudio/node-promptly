@@ -25,7 +25,7 @@ describe('prompt()', function () {
         process.stdin.emit('data', 'yeaa\n');
     });
 
-    it('should keep asking if no value is passed and not default was defined', function (next) {
+    it('should keep asking if no value is passed and no default was defined', function (next) {
         stdout = '';
 
         promptly.prompt('something: ', function (err, value) {
@@ -43,9 +43,9 @@ describe('prompt()', function () {
     it('should assume default value if nothing is passed', function (next) {
         stdout = '';
 
-        promptly.prompt('something: ', { 'default': 'yeaa' }, function (err, value) {
+        promptly.prompt('something: ', { 'default': '' }, function (err, value) {
             expect(err).to.be(null);
-            expect(value).to.be('yeaa');
+            expect(value).to.be('');
             expect(stdout).to.contain('something: ');
             next();
         });
@@ -129,7 +129,7 @@ describe('prompt()', function () {
         },
             times = 0;
 
-        promptly.prompt('something: ', { trim: true, validator: validator }, function (err, value) {
+        promptly.prompt('something: ', { validator: validator }, function (err, value) {
             times++;
 
             if (times === 1) {
@@ -139,10 +139,34 @@ describe('prompt()', function () {
             }
 
             expect(value).to.equal('yeaa');
+            expect(stdout).to.contain('something: ');
+            expect(stdout.indexOf('something')).to.not.be(stdout.lastIndexOf('something'));
             next();
         });
 
         process.stdin.emit('data', 'wtf\n');
+    });
+
+    it('should automatically retry if a validator fails and retry is enabled', function (next) {
+        stdout = '';
+
+        var validator = function (value) {
+            if (value !== 'yeaa') {
+                throw new Error('bla');
+            }
+
+            return value;
+        };
+
+        promptly.prompt('something: ', { validator: validator, retry: true }, function (err, value) {
+            expect(stdout).to.contain('something: ');
+            expect(stdout.indexOf('something')).to.not.be(stdout.lastIndexOf('something'));
+            expect(value).to.equal('yeaa');
+            next();
+        });
+
+        process.stdin.emit('data', 'wtf\n');
+        process.stdin.emit('data', 'yeaa\n');
     });
 });
 
@@ -242,5 +266,35 @@ describe('confirm()', function () {
         });
 
         process.stdin.emit('data', 'bleh\n');
+    });
+});
+
+describe('password()', function () {
+    it('should prompt the user silently', function (next) {
+        stdout = '';
+
+        promptly.password('something: ', function (err, value) {
+            expect(value).to.be('yeaa');
+            expect(stdout).to.contain('something: ');
+            expect(stdout).to.not.contain('yeaa');
+
+            next();
+        });
+
+        process.stdin.emit('data', 'yeaa\n');
+    });
+
+    it('should not trim by default', function (next) {
+        stdout = '';
+
+        promptly.password('something: ', function (err, value) {
+            expect(value).to.be(' yeaa ');
+            expect(stdout).to.contain('something: ');
+            expect(stdout).to.not.contain(' yeaa ');
+
+            next();
+        });
+
+        process.stdin.emit('data', ' yeaa \n');
     });
 });

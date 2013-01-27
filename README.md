@@ -5,7 +5,7 @@ Simple command line prompting utility.
 
 ## Installation ##
 
-npm install promptly
+`$ npm install promptly`
 
 
 ## API ##
@@ -29,6 +29,8 @@ Default options:
     'validator': null,
     // Automatically retry if a validator fails
     'retry': false,
+    // Do not print what the user types
+    'silent': false,
     // Input and output streams to read and write to
     'input': process.stdin,
     'output': process.stdout
@@ -103,7 +105,7 @@ promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, 
 Ask the user to confirm something.   
 Calls `fn` with `error` and `value` (true or false).
 
-The available options are the same, except that `retry` defauls to `true`.   
+The available options are the same, except that `retry` defaults to `true`.   
 Truthy values are: `y`, `yes` and `1`.
 Falsy values are `n`, `no`, and `0`.
 Comparison is made in case insensitive way.
@@ -122,7 +124,7 @@ promptly.confirm('Are you sure? ', function (err, value) {
 Ask the user to choose between multiple `choices` (array of choices).   
 Calls `fn` with `error` and `value` (true or false).   
 
-The available options are the same, except that `retry` defauls to `true`.
+The available options are the same, except that `retry` defaults to `true`.
 
 Example usage:
 
@@ -138,7 +140,7 @@ promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], func
 Prompts for a password, printing the `message` and waiting for the input.   
 When available, calls `fn` with `error` and `value`.   
 
-The available options are the same, except that `trim` defauls to `false`.
+The available options are the same, except that `trim` and `silent` defaults to `false`.
 
 Example usage:
 
