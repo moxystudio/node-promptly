@@ -149,7 +149,7 @@ Example usage:
 
 ```js
 promptly.password('Type a password: ', function (err, value) {
-    console.log('Password is', value);
+    console.log('Password is:', value);
 });
 ```
 
