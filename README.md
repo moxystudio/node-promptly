@@ -18,7 +18,7 @@ Note that the `options` argument is optional for all the commands.
 
 ### .prompt(message, opts, fn) ###
 
-Prompts for a value, printing the `message` and waiting for the input.
+Prompts for a value, printing the `message` and waiting for the input.   
 When done, calls `fn` with `error` and `value`.
 
 Default options:
@@ -107,11 +107,11 @@ promptly.prompt('Name: ', { validator: validator, retry: false }, function (err,
 
 ### .confirm(message, opts, fn) ###
 
-Ask the user to confirm something.
+Ask the user to confirm something.   
 Calls `fn` with `error` and `value` (true or false).
 
-Truthy values are: `y`, `yes` and `1`.
-Falsy values are `n`, `no`, and `0`.
+Truthy values are: `y`, `yes` and `1`.   
+Falsy values are `n`, `no`, and `0`.   
 Comparison is made in a case insensitive way.
 
 Example usage:
@@ -125,7 +125,7 @@ promptly.confirm('Are you sure? ', function (err, value) {
 
 ### .choose(message, choices, opts, fn) ###
 
-Ask the user to choose between multiple `choices` (array of choices).
+Ask the user to choose between multiple `choices` (array of choices).   
 Calls `fn` with `error` and `value` (true or false).
 
 Example usage:
@@ -139,7 +139,7 @@ promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], func
 
 ### .password(message, opts, fn) ###
 
-Prompts for a password, printing the `message` and waiting for the input.
+Prompts for a password, printing the `message` and waiting for the input.   
 When available, calls `fn` with `error` and `value`.
 
 The available options are the same, except that `trim` and `silent` default to `false` and `default` is an empty string (to allow empty passwords).
