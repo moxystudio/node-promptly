@@ -58,7 +58,7 @@ Ask for a name:
 ```js
 promptly.prompt('Name: ', function (err, value) {
     // err is always null in this case, because no validators are set
-    console.log(value);
+    console.log('Name is:', value);
 });
 ```
 
@@ -80,7 +80,7 @@ promptly.prompt('Name: ', { validator: validator }, function (err, value) {
         err.retry();
     }
 
-    console.log('Name is: ', value);
+    console.log('Name is:', value);
 });
 ```
 
@@ -97,7 +97,7 @@ var validator = function (value) {
 
 promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, value) {
     // err is always null because promptly will be prompting for a name until it validates
-    console.log('Name is: ', value);
+    console.log('Name is:', value);
 });
 ```
 
@@ -108,15 +108,15 @@ Ask the user to confirm something.
 Calls `fn` with `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defaults to `true`.   
-Truthy values are: `y`, `yes` and `1`.
-Falsy values are `n`, `no`, and `0`.
+Truthy values are: `y`, `yes` and `1`.  
+Falsy values are `n`, `no`, and `0`.  
 Comparison is made in case insensitive way.
 
 Example usage:
 
 ```js
 promptly.confirm('Are you sure? ', function (err, value) {
-    console.log('Answer: ', value);
+    console.log('Answer:', value);
 });
 ```
 
@@ -132,7 +132,7 @@ Example usage:
 
 ```js
 promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
-    console.log('Answer: ', value);
+    console.log('Answer:', value);
 });
 ```
 
@@ -148,7 +148,7 @@ Example usage:
 
 ```js
 promptly.password('Type a password: ', function (err, value) {
-    console.log('Password is', value);
+    console.log('Password is:', value);
 });
 ```
 
