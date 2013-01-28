@@ -15,17 +15,20 @@ promptly.prompt = function (message, opts, fn) {
     if (opts.trim === undefined) {
         opts.trim = true;
     }
+    if (opts.retry === undefined) {
+        opts.retry = true;
+    }
 
     // Setup read's options
     var readOpts = {
         prompt: message,
-        stdin: opts.input || process.stdin,
-        stdout: opts.output || process.stdout,
+        input: opts.input || process.stdin,
+        output: opts.output || process.stdout,
         silent: opts.silent
     };
 
     // Use readline question
-    read(readOpts, function (err, response) {
+    read(readOpts, function (err, data) {
         // Ignore the error attribute
         // It is set on SIGINT or if timeout reached (we are not using timeout)
         if (err) {
@@ -34,14 +37,14 @@ promptly.prompt = function (message, opts, fn) {
 
         // Trim?
         if (opts.trim) {
-            response = response.trim();
+            data = data.trim();
         }
 
         // Mandatory?
-        if (opts['default'] === undefined && !response) {
+        if (opts['default'] == null && !data) {
             return promptly.prompt(message, opts, fn);
         } else {
-            response = response || opts['default'];
+            data = data || opts['default'];
         }
 
         // Validator verification
@@ -55,10 +58,14 @@ promptly.prompt = function (message, opts, fn) {
 
             for (x = 0; x < length; x += 1) {
                 try {
-                    response = opts.validator[x](response);
+                    data = opts.validator[x](data);
                 } catch (e) {
                     // Retry automatically if the retry option is enabled
                     if (opts.retry) {
+                        if (e.message) {
+                            readOpts.output.write(e.message + '\n');
+                        }
+
                         return promptly.prompt(message, opts, fn);
                     }
 
@@ -70,7 +77,7 @@ promptly.prompt = function (message, opts, fn) {
         }
 
         // Everything ok
-        fn(null, response);
+        fn(null, data);
     });
 };
 
@@ -89,6 +96,9 @@ promptly.password = function (message, opts, fn) {
     }
     if (opts.trim === undefined) {
         opts.trim = false;
+    }
+    if (opts['default'] === undefined) {
+        opts['default'] = '';
     }
 
     // Use prompt()
@@ -128,7 +138,7 @@ promptly.confirm = function (message, opts, fn) {
             return false;
         }
 
-        return value;
+        throw new Error();
     };
     opts.validator.push(validator);
 
@@ -148,11 +158,6 @@ promptly.choose = function (message, choices, opts, fn) {
     opts.validator = opts.validator || [];
     if (!Array.isArray(opts.validator)) {
         opts.validator = [opts.validator];
-    }
-
-    // Set the default options
-    if (opts.retry === undefined) {
-        opts.retry = true;
     }
 
     // Push the choice validator

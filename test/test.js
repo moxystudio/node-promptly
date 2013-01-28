@@ -77,24 +77,9 @@ describe('prompt()', function () {
             return value;
         };
 
-        promptly.prompt('something: ', { validator: validator }, function (err, value) {
+        promptly.prompt('something: ', { validator: validator, retry: false }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
-            expect(stdout).to.contain('something: ');
-            next();
-        });
-
-        process.stdin.emit('data', ' yeaa \n');
-    });
-
-    it('should give error if the validator fails', function (next) {
-        stdout = '';
-
-        var validator = function () { throw new Error('bla'); };
-
-        promptly.prompt('something: ', { validator: validator }, function (err) {
-            expect(err).to.be.an(Error);
-            expect(err.message).to.be('bla');
             expect(stdout).to.contain('something: ');
             next();
         });
@@ -117,6 +102,44 @@ describe('prompt()', function () {
         process.stdin.emit('data', ' yeaa \n');
     });
 
+    it('should automatically retry if a validator fails by default', function (next) {
+        stdout = '';
+
+        var validator = function (value) {
+            if (value !== 'yeaa') {
+                throw new Error('bla');
+            }
+
+            return value;
+        };
+
+        promptly.prompt('something: ', { validator: validator, retry: true }, function (err, value) {
+            expect(stdout).to.contain('something: ');
+            expect(stdout.indexOf('something')).to.not.be(stdout.lastIndexOf('something'));
+            expect(stdout).to.contain('bla');
+            expect(value).to.equal('yeaa');
+            next();
+        });
+
+        process.stdin.emit('data', 'wtf\n');
+        process.stdin.emit('data', 'yeaa\n');
+    });
+
+    it('should give error if the validator fails and retry is false', function (next) {
+        stdout = '';
+
+        var validator = function () { throw new Error('bla'); };
+
+        promptly.prompt('something: ', { validator: validator, retry: false }, function (err) {
+            expect(err).to.be.an(Error);
+            expect(err.message).to.be('bla');
+            expect(stdout).to.contain('something: ');
+            next();
+        });
+
+        process.stdin.emit('data', ' yeaa \n');
+    });
+
     it('should give retry ability on error', function (next) {
         stdout = '';
 
@@ -129,7 +152,7 @@ describe('prompt()', function () {
         },
             times = 0;
 
-        promptly.prompt('something: ', { validator: validator }, function (err, value) {
+        promptly.prompt('something: ', { validator: validator, retry: false }, function (err, value) {
             times++;
 
             if (times === 1) {
@@ -147,27 +170,6 @@ describe('prompt()', function () {
         process.stdin.emit('data', 'wtf\n');
     });
 
-    it('should automatically retry if a validator fails and retry is enabled', function (next) {
-        stdout = '';
-
-        var validator = function (value) {
-            if (value !== 'yeaa') {
-                throw new Error('bla');
-            }
-
-            return value;
-        };
-
-        promptly.prompt('something: ', { validator: validator, retry: true }, function (err, value) {
-            expect(stdout).to.contain('something: ');
-            expect(stdout.indexOf('something')).to.not.be(stdout.lastIndexOf('something'));
-            expect(value).to.equal('yeaa');
-            next();
-        });
-
-        process.stdin.emit('data', 'wtf\n');
-        process.stdin.emit('data', 'yeaa\n');
-    });
 });
 
 describe('choose()', function () {
@@ -179,6 +181,7 @@ describe('choose()', function () {
             expect(value).to.be('orange');
             expect(stdout).to.contain('apple or orange: ');
             expect(stdout.indexOf('apple or orange')).to.not.be(stdout.lastIndexOf('apple or orange'));
+            expect(stdout).to.contain('Invalid choice');
             next();
         });
 
@@ -260,7 +263,7 @@ describe('confirm()', function () {
 
         promptly.confirm('yes or no: ', { retry: false }, function (err) {
             expect(err).to.be.an(Error);
-            expect(err.message).to.contain('choice');
+            expect(err.message).to.not.contain('Invalid choice');
             expect(stdout).to.contain('yes or no: ');
             next();
         });
@@ -296,5 +299,18 @@ describe('password()', function () {
         });
 
         process.stdin.emit('data', ' yeaa \n');
+    });
+
+    it('show allow empty passwords by default', function (next) {
+        stdout = '';
+
+        promptly.password('something: ', function (err, value) {
+            expect(value).to.be('');
+            expect(stdout).to.contain('something: ');
+
+            next();
+        });
+
+        process.stdin.emit('data', '\n');
     });
 });
