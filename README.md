@@ -105,12 +105,12 @@ promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, 
 
 ### .confirm(message, opts, fn) ###
 
-Ask the user to confirm something.
+Ask the user to confirm something.   
 Calls `fn` with `error` and `value` (true or false).
 
-The available options are the same, except that `retry` defaults to `true`.
-Truthy values are: `y`, `yes` and `1`.
-Falsy values are `n`, `no`, and `0`.
+The available options are the same, except that `retry` defaults to `true`.   
+Truthy values are: `y`, `yes` and `1`.   
+Falsy values are `n`, `no`, and `0`.   
 Comparison is made in a case insensitive way.
 
 Example usage:
@@ -124,7 +124,7 @@ promptly.confirm('Are you sure? ', function (err, value) {
 
 ### .choose(message, choices, opts, fn) ###
 
-Ask the user to choose between multiple `choices` (array of choices).
+Ask the user to choose between multiple `choices` (array of choices).   
 Calls `fn` with `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defaults to `true`.
@@ -140,7 +140,7 @@ promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], func
 
 ### .password(message, opts, fn) ###
 
-Prompts for a password, printing the `message` and waiting for the input.
+Prompts for a password, printing the `message` and waiting for the input.   
 When available, calls `fn` with `error` and `value`.
 
 The available options are the same, except that `trim` and `silent` default to `false`.
