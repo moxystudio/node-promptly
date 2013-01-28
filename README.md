@@ -12,7 +12,8 @@ Simple command line prompting utility.
 
 ## API ##
 
-In all the commands, the options argument is not mandatory.
+
+Note that the `options` argument is optional for all the commands.
 
 
 ### .prompt(message, opts, fn) ###
@@ -23,7 +24,7 @@ When done, calls `fn` with `error` and `value`.
 Default options:
 ```js
 {
-    // The default value to assume. If not supplied, the input is mandatory
+    // The default value. If not supplied, the input is mandatory
     'default': 'default value',
     // Automatically trim the input
     'trim': true,
@@ -76,11 +77,11 @@ promptly.prompt('Name: ', { validator: validator }, function (err, value) {
     if (err) {
         console.error('Invalid name');
         // Manually call retry
-        // The passed error have a retry method to easily prompt again.
+        // The passed error has a retry method to easily prompt again.
         err.retry();
     }
 
-    console.log('Name is: ', value);
+    console.log('Name is:', value);
 });
 ```
 
@@ -104,27 +105,27 @@ promptly.prompt('Name: ', { validator: validator , retry: true}, function (err, 
 
 ### .confirm(message, opts, fn) ###
 
-Ask the user to confirm something.   
+Ask the user to confirm something.
 Calls `fn` with `error` and `value` (true or false).
 
-The available options are the same, except that `retry` defaults to `true`.   
+The available options are the same, except that `retry` defaults to `true`.
 Truthy values are: `y`, `yes` and `1`.
 Falsy values are `n`, `no`, and `0`.
-Comparison is made in case insensitive way.
+Comparison is made in a case insensitive way.
 
 Example usage:
 
 ```js
 promptly.confirm('Are you sure? ', function (err, value) {
-    console.log('Answer: ', value);
+    console.log('Answer:', value);
 });
 ```
 
 
 ### .choose(message, choices, opts, fn) ###
 
-Ask the user to choose between multiple `choices` (array of choices).   
-Calls `fn` with `error` and `value` (true or false).   
+Ask the user to choose between multiple `choices` (array of choices).
+Calls `fn` with `error` and `value` (true or false).
 
 The available options are the same, except that `retry` defaults to `true`.
 
@@ -132,17 +133,17 @@ Example usage:
 
 ```js
 promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
-    console.log('Answer: ', value);
+    console.log('Answer:', value);
 });
 ```
 
 
 ### .password(message, opts, fn) ###
 
-Prompts for a password, printing the `message` and waiting for the input.   
-When available, calls `fn` with `error` and `value`.   
+Prompts for a password, printing the `message` and waiting for the input.
+When available, calls `fn` with `error` and `value`.
 
-The available options are the same, except that `trim` and `silent` defaults to `false`.
+The available options are the same, except that `trim` and `silent` default to `false`.
 
 Example usage:
 
