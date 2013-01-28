@@ -126,7 +126,7 @@ promptly.confirm('Are you sure? ', function (err, value) {
 ### .choose(message, choices, opts, fn) ###
 
 Ask the user to choose between multiple `choices` (array of choices).   
-Calls `fn` with `error` and `value` (true or false).
+Calls `fn` with `error` and `value`.
 
 Example usage:
 
