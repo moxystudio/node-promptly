@@ -8,8 +8,8 @@ promptly.prompt = function (message, opts, fn) {
     if (typeof opts === 'function') {
         fn = opts;
         opts = {};
-    } else {
-        opts = opts || {};
+    } else if (!opts) {
+        opts = {};
     }
 
     if (opts.trim === undefined) {
@@ -110,8 +110,8 @@ promptly.confirm = function (message, opts, fn) {
     if (typeof opts === 'function') {
         fn = opts;
         opts = {};
-    } else {
-        opts = opts || {};
+    } else if (!opts) {
+        opts = {};
     }
 
     opts.validator = opts.validator || [];
@@ -151,8 +151,8 @@ promptly.choose = function (message, choices, opts, fn) {
     if (typeof opts === 'function') {
         fn = opts;
         opts = {};
-    } else {
-        opts = opts || {};
+    } else if (!opts) {
+        opts = {};
     }
 
     opts.validator = opts.validator || [];
