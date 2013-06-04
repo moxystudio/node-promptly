@@ -161,12 +161,17 @@ promptly.choose = function (message, choices, opts, fn) {
     }
 
     // Push the choice validator
+    var nrChoices = choices.length;
     var validator = function (value) {
-        if (choices.indexOf(value) === -1) {
-            throw new Error('Invalid choice: ' + value);
+        var x;
+
+        for (x = 0; x < nrChoices; x++) {
+            if (choices[x] == value) {
+                return choices[x];
+            }
         }
 
-        return value;
+        throw new Error('Invalid choice: ' + value);
     };
     opts.validator.push(validator);
 
