@@ -4,6 +4,7 @@
 
 Simple command line prompting utility.
 
+
 ## Installation
 
 `$ npm install promptly`
@@ -11,11 +12,7 @@ Simple command line prompting utility.
 
 ## API
 
-
-Note that the `options` argument is optional for all the commands.
-
-
-### .prompt(message, opts, fn)
+### .prompt(message, [opts], fn)
 
 Prompts for a value, printing the `message` and waiting for the input.   
 When done, calls `fn` with `error` and `value`.
@@ -104,7 +101,7 @@ promptly.prompt('Name: ', { validator: validator, retry: false }, function (err,
 });
 ```
 
-### .confirm(message, opts, fn)
+### .confirm(message, [opts], fn)
 
 Ask the user to confirm something.   
 Calls `fn` with `error` and `value` (true or false).
@@ -122,7 +119,7 @@ promptly.confirm('Are you sure? ', function (err, value) {
 ```
 
 
-### .choose(message, choices, opts, fn)
+### .choose(message, choices, [opts], fn)
 
 Ask the user to choose between multiple `choices` (array of choices).   
 Calls `fn` with `error` and `value`.
@@ -136,7 +133,7 @@ promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], func
 ```
 
 
-### .password(message, opts, fn)
+### .password(message, [opts], fn)
 
 Prompts for a password, printing the `message` and waiting for the input.   
 When available, calls `fn` with `error` and `value`.
