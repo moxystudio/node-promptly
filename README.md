@@ -1,6 +1,4 @@
-# promptly
-
-[![Build Status](https://secure.travis-ci.org/IndigoUnited/node-promptly.png)](http://travis-ci.org/IndigoUnited/node-promptly.png)
+# promptly [![Build Status](https://secure.travis-ci.org/IndigoUnited/node-promptly.png)](http://travis-ci.org/IndigoUnited/node-promptly.png)
 
 Simple command line prompting utility.
 
