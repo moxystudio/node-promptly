@@ -1,6 +1,6 @@
 {
   "name": "promptly",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple command line prompting utility",
   "main": "index.js",
   "dependencies": {
