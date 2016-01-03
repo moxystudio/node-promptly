@@ -1,4 +1,16 @@
-# promptly [![Build Status](https://secure.travis-ci.org/IndigoUnited/node-promptly.png)](http://travis-ci.org/IndigoUnited/node-promptly.png)
+# promptly
+
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
+
+[npm-url]:https://npmjs.org/package/promptly
+[downloads-image]:http://img.shields.io/npm/dm/promptly.svg
+[npm-image]:http://img.shields.io/npm/v/promptly.svg
+[travis-url]:https://travis-ci.org/IndigoUnited/node-promptly
+[travis-image]:http://img.shields.io/travis/IndigoUnited/node-promptly.svg
+[david-dm-url]:https://david-dm.org/IndigoUnited/node-promptly
+[david-dm-image]:https://img.shields.io/david/IndigoUnited/node-promptly.svg
+[david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-promptly#info=devDependencies
+[david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/node-promptly.svg
 
 Simple command line prompting utility.
 
