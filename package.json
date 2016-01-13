@@ -12,7 +12,7 @@
     "mocha": "^2.1.0"
   },
   "scripts": {
-    "test": "mocha -R spec --bail"
+    "test": "mocha --bail"
   },
   "repository": {
     "type": "git",
