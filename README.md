@@ -6,7 +6,7 @@
 [downloads-image]:http://img.shields.io/npm/dm/promptly.svg
 [npm-image]:http://img.shields.io/npm/v/promptly.svg
 [travis-url]:https://travis-ci.org/IndigoUnited/node-promptly
-[travis-image]:http://img.shields.io/travis/IndigoUnited/node-promptly.svg
+[travis-image]:http://img.shields.io/travis/IndigoUnited/node-promptly/master.svg
 [david-dm-url]:https://david-dm.org/IndigoUnited/node-promptly
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/node-promptly.svg
 [david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-promptly#info=devDependencies
