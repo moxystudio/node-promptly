@@ -5,8 +5,8 @@ var promptly = module.exports;
 
 var parseMessage = function(message, opts) {
     return (opts.hasOwnProperty('default') && opts.default != '')
-      ? `${message} (${opts.default}):`
-      : `${message}:`;
+      ? message + ' (' + opts.default + '):'
+      : message + ':';
 }
 
 promptly.prompt = function (message, opts, fn) {
