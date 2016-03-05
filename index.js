@@ -3,6 +3,12 @@
 var read = require('read');
 var promptly = module.exports;
 
+var parseMessage = function(message, opts) {
+    return (opts.hasOwnProperty('default') && opts.default != '')
+      ? `${message} (${opts.default}):`
+      : `${message}:`;
+}
+
 promptly.prompt = function (message, opts, fn) {
     // Arguments parsing
     if (typeof opts === 'function') {
@@ -21,7 +27,7 @@ promptly.prompt = function (message, opts, fn) {
 
     // Setup read's options
     var readOpts = {
-        prompt: message,
+        prompt: parseMessage(message, opts),
         input: opts.input || process.stdin,
         output: opts.output || process.stdout,
         silent: opts.silent
