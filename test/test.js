@@ -25,7 +25,7 @@ beforeEach(function () {
 
 describe('prompt()', function () {
     it('should prompt the user', function (next) {
-        promptly.prompt('something: ', function (err, value) {
+        promptly.prompt('something', function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -36,7 +36,7 @@ describe('prompt()', function () {
     });
 
     it('should keep asking if no value is passed and no default was defined', function (next) {
-        promptly.prompt('something: ', function (err, value) {
+        promptly.prompt('something', function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -50,10 +50,10 @@ describe('prompt()', function () {
 
 
     it('should assume default value if nothing is passed', function (next) {
-        promptly.prompt('something: ', { 'default': '' }, function (err, value) {
+        promptly.prompt('something', { 'default': 'myValue' }, function (err, value) {
             expect(err).to.be(null);
-            expect(value).to.be('');
-            expect(stdout).to.contain('something: ');
+            expect(value).to.be('myValue');
+            expect(stdout).to.contain('something (myValue):');
             next();
         });
 
@@ -61,7 +61,7 @@ describe('prompt()', function () {
     });
 
     it('should trim the user input if trim is enabled', function (next) {
-        promptly.prompt('something: ', { trim: true }, function (err, value) {
+        promptly.prompt('something', { trim: true }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -80,7 +80,7 @@ describe('prompt()', function () {
             return value;
         }
 
-        promptly.prompt('something: ', { validator: validator, retry: false }, function (err, value) {
+        promptly.prompt('something', { validator: validator, retry: false }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -93,7 +93,7 @@ describe('prompt()', function () {
     it('should assume values from the validator', function (next) {
         function validator() { return 'bla'; }
 
-        promptly.prompt('something: ', { validator: validator }, function (err, value) {
+        promptly.prompt('something', { validator: validator }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('bla');
             expect(stdout).to.contain('something: ');
@@ -112,7 +112,7 @@ describe('prompt()', function () {
             return value;
         }
 
-        promptly.prompt('something: ', { validator: validator, retry: true }, function (err, value) {
+        promptly.prompt('something', { validator: validator, retry: true }, function (err, value) {
             expect(stdout).to.contain('something: ');
             expect(stdout.indexOf('something')).to.not.be(stdout.lastIndexOf('something'));
             expect(stdout).to.contain('bla');
@@ -127,7 +127,7 @@ describe('prompt()', function () {
     it('should give error if the validator fails and retry is false', function (next) {
         function validator() { throw new Error('bla'); }
 
-        promptly.prompt('something: ', { validator: validator, retry: false }, function (err) {
+        promptly.prompt('something', { validator: validator, retry: false }, function (err) {
             expect(err).to.be.an(Error);
             expect(err.message).to.be('bla');
             expect(stdout).to.contain('something: ');
@@ -148,7 +148,7 @@ describe('prompt()', function () {
             return value;
         }
 
-        promptly.prompt('something: ', { validator: validator, retry: false }, function (err, value) {
+        promptly.prompt('something', { validator: validator, retry: false }, function (err, value) {
             times++;
 
             if (times === 1) {
@@ -167,7 +167,7 @@ describe('prompt()', function () {
     });
 
     it('should write input to stdout by default', function (next) {
-        promptly.prompt('something: ', function (err, value) {
+        promptly.prompt('something', function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -179,7 +179,7 @@ describe('prompt()', function () {
     });
 
     it('should write input to stdout if silent is false', function (next) {
-        promptly.prompt('something: ', { silent: true }, function (err, value) {
+        promptly.prompt('something', { silent: true }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
@@ -193,7 +193,7 @@ describe('prompt()', function () {
 
 describe('choose()', function () {
     it('should keep asking on invalid choice', function (next) {
-        promptly.choose('apple or orange: ', ['apple', 'orange'], function (err, value) {
+        promptly.choose('apple or orange', ['apple', 'orange'], function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('orange');
             expect(stdout).to.contain('apple or orange: ');
@@ -207,7 +207,7 @@ describe('choose()', function () {
     });
 
     it('should error on invalid choice if retry is disabled', function (next) {
-        promptly.choose('apple or orange: ', ['apple', 'orange'], { retry: false }, function (err) {
+        promptly.choose('apple or orange', ['apple', 'orange'], { retry: false }, function (err) {
             expect(err).to.be.an(Error);
             expect(err.message).to.contain('choice');
             expect(stdout).to.contain('apple or orange: ');
@@ -218,7 +218,7 @@ describe('choose()', function () {
     });
 
     it('should be ok on valid choice', function (next) {
-        promptly.choose('apple or orange: ', ['apple', 'orange'], function (err, value) {
+        promptly.choose('apple or orange', ['apple', 'orange'], function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('apple');
             expect(stdout).to.contain('apple or orange: ');
@@ -229,7 +229,7 @@ describe('choose()', function () {
     });
 
     it('should not use strict comparison when matching against valid choices', function (next) {
-        promptly.choose('choices: ', [1, 2, 3], function (err, value) {
+        promptly.choose('choices', [1, 2, 3], function (err, value) {
             expect(err).to.be(null);
             expect(typeof value).to.equal('number');
             expect(value).to.be(1);
@@ -244,7 +244,7 @@ describe('choose()', function () {
 describe('confirm()', function () {
     it('should be ok on valid choice and coerce to boolean values', function (next) {
         async.forEachSeries(['yes', 'Y', 'y', '1'], function (truthy, next) {
-            promptly.confirm('test yes: ', { retry: false }, function (err, value) {
+            promptly.confirm('test yes', { retry: false }, function (err, value) {
                 expect(err).to.be(null);
                 expect(value).to.be(true);
                 expect(stdout).to.contain('test yes: ');
@@ -254,7 +254,7 @@ describe('confirm()', function () {
             sendLine(truthy);
         }, function () {
             async.forEachSeries(['no', 'N', 'n', '0'], function (truthy, next) {
-                promptly.confirm('test no: ', function (err, value) {
+                promptly.confirm('test no', function (err, value) {
                     expect(err).to.be(null);
                     expect(value).to.be(false);
                     expect(stdout).to.contain('test no: ');
@@ -267,7 +267,7 @@ describe('confirm()', function () {
     });
 
     it('should keep asking on invalid choice', function (next) {
-        promptly.confirm('yes or no: ', function (err, value) {
+        promptly.confirm('yes or no', function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be(true);
             expect(stdout).to.contain('yes or no: ');
@@ -280,7 +280,7 @@ describe('confirm()', function () {
     });
 
     it('should error on invalid choice if retry is disabled', function (next) {
-        promptly.confirm('yes or no: ', { retry: false }, function (err) {
+        promptly.confirm('yes or no', { retry: false }, function (err) {
             expect(err).to.be.an(Error);
             expect(err.message).to.not.contain('Invalid choice');
             expect(stdout).to.contain('yes or no: ');
@@ -293,7 +293,7 @@ describe('confirm()', function () {
 
 describe('password()', function () {
     it('should prompt the user silently', function (next) {
-        promptly.password('something: ', function (err, value) {
+        promptly.password('something', function (err, value) {
             expect(value).to.be('yeaa');
             expect(stdout).to.contain('something: ');
             expect(stdout).to.not.contain('yeaa');
@@ -305,7 +305,7 @@ describe('password()', function () {
     });
 
     it('should not trim by default', function (next) {
-        promptly.password('something: ', function (err, value) {
+        promptly.password('something', function (err, value) {
             expect(value).to.be(' yeaa ');
             expect(stdout).to.contain('something: ');
             expect(stdout).to.not.contain(' yeaa ');
@@ -317,7 +317,7 @@ describe('password()', function () {
     });
 
     it('show allow empty passwords by default', function (next) {
-        promptly.password('something: ', function (err, value) {
+        promptly.password('something', function (err, value) {
             expect(value).to.be('');
             expect(stdout).to.contain('something: ');
 
