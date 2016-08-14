@@ -22,10 +22,10 @@ Simple command line prompting utility.
 
 ## API
 
-### .prompt(message, [opts], fn)
+### .prompt(message, [opts], [fn])
 
 Prompts for a value, printing the `message` and waiting for the input.   
-When done, calls `fn` with `error` and `value`.
+When done, calls `fn` with `error` and `value`. Or returns with `Promise` if no `fn` is provided.
 
 Default options:
 ```js
@@ -47,6 +47,7 @@ Default options:
 ```
 
 The validators have two purposes:
+
 ```js
 function (value) {
     // Validation example, throwing an error when invalid
@@ -62,11 +63,22 @@ function (value) {
 Example usages
 
 Ask for a name:
+
 ```js
 promptly.prompt('Name: ', function (err, value) {
     // err is always null in this case, because no validators are set
     console.log(value);
 });
+```
+
+Using Promise:
+
+```js
+promptly.prompt('Name: ')
+    .then(function (value) {
+        // no need for catch in this case, because no validators are set
+        console.log(value);
+    })
 ```
 
 Ask for a name with a constraint (non-empty value and length > 2):
@@ -88,6 +100,26 @@ promptly.prompt('Name: ', { validator: validator }, function (err, value) {
 });
 ```
 
+Using Promise:
+
+```js
+var validator = function (value) {
+    if (value.length < 2) {
+        throw new Error('Min length of 2');
+    }
+
+    return value;
+};
+
+promptly.prompt('Name: ', { validator: validator })
+    .then(function (value) {
+        // Since retry is true by default, catch will never be called
+        // because promptly will be prompting for a name until it validates
+        // Between each prompt, the error message from the validator will be printed
+        console.log('Name is:', value);
+    });
+```
+
 Same as above but do not retry automatically:
 
 ```js
@@ -101,7 +133,7 @@ var validator = function (value) {
 
 promptly.prompt('Name: ', { validator: validator, retry: false }, function (err, value) {
     if (err) {
-        console.error('Invalid name:', e.message);
+        console.error('Invalid name:', err.message);
         // Manually call retry
         // The passed error has a retry method to easily prompt again.
         return err.retry();
@@ -109,6 +141,29 @@ promptly.prompt('Name: ', { validator: validator, retry: false }, function (err,
 
     console.log('Name is:', value);
 });
+```
+
+Using Promise:
+
+```js
+var validator = function (value) {
+    if (value.length < 2) {
+        throw new Error('Min length of 2');
+    }
+
+    return value;
+};
+
+promptly.prompt('Name: ', { validator: validator, retry: false })
+    .then(function (value) {
+        console.log('Name is:', value);
+    })
+    .catch(function (err) {
+        console.error('Invalid name:', err.message);
+        // Manually call retry
+        // The passed error has a retry method to easily prompt again.
+        return err.retry();
+    });
 ```
 
 ### .confirm(message, [opts], fn)
@@ -128,6 +183,15 @@ promptly.confirm('Are you sure? ', function (err, value) {
 });
 ```
 
+Using Promise:
+
+```js
+promptly.confirm('Are you sure? ')
+    .then(function (value) {
+        console.log('Answer:', value);
+    });
+```
+
 
 ### .choose(message, choices, [opts], fn)
 
@@ -140,6 +204,15 @@ Example usage:
 promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'], function (err, value) {
     console.log('Answer:', value);
 });
+```
+
+Using Promise:
+
+```js
+promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange'])
+    .then(function (value) {
+        console.log('Answer:', value);
+    });
 ```
 
 
@@ -156,6 +229,15 @@ Example usage:
 promptly.password('Type a password: ', function (err, value) {
     console.log('Password is:', value);
 });
+```
+
+Using Promise:
+
+```js
+promptly.password('Type a password: ')
+    .then(function (value) {
+        console.log('Password is:', value);
+    });
 ```
 
 
