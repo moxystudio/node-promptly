@@ -192,50 +192,17 @@ describe('prompt()', function () {
 
     it('should prompt the user (using promise)', function (next) {
         promptly.prompt('something: ')
-            .then(function (value) {
-                expect(value).to.be('yeaa');
-                expect(stdout).to.contain('something: ');
-                next();
-            })
-            .catch(function () {
-                expect().fail();
-                next();
-            });
+        .then(function (value) {
+            expect(value).to.be('yeaa');
+            expect(stdout).to.contain('something: ');
+            next();
+        })
+        .catch(function () {
+            expect().fail();
+            next();
+        });
 
         sendLine('yeaa');
-    });
-
-    it('should assume default value if nothing is passed (using promise)', function (next) {
-        promptly.prompt('something: ', { 'default': 'myValue' })
-            .then(function (value) {
-                expect(value).to.be('myValue');
-                expect(stdout).to.contain('something: ');
-                next();
-            })
-            .catch(function () {
-                expect().fail();
-                next();
-            });
-
-        sendLine('');
-    });
-
-    it('should give error if the validator fails and retry is false (using promise)', function (next) {
-        function validator() { throw new Error('bla'); }
-
-        promptly.prompt('something: ', { validator: validator, retry: false })
-            .then(function () {
-                expect().fail();
-                next();
-            })
-            .catch(function (err) {
-                expect(err).to.be.an(Error);
-                expect(err.message).to.be('bla');
-                expect(stdout).to.contain('something: ');
-                next();
-            });
-
-        sendLine(' yeaa ');
     });
 });
 
@@ -288,7 +255,7 @@ describe('choose()', function () {
         sendLine('1');
     });
 
-    it('should work (using promise)', function (next) {
+    it('should work using promise', function (next) {
         promptly.choose('apple or orange? ', ['apple', 'orange'])
             .then(function (value) {
                 expect(value).to.be('orange');
@@ -301,22 +268,6 @@ describe('choose()', function () {
             });
 
         sendLine('orange');
-    });
-
-    it('should error on invalid choice if retry is disabled (using promise)', function (next) {
-        promptly.choose('apple or orange? ', ['apple', 'orange'], { retry: false })
-            .then(function () {
-                expect().fail();
-                next();
-            })
-            .catch(function (err) {
-                expect(err).to.be.an(Error);
-                expect(err.message).to.contain('choice');
-                expect(stdout).to.contain('apple or orange? ');
-                next();
-            });
-
-        sendLine('bleh');
     });
 });
 
@@ -369,7 +320,7 @@ describe('confirm()', function () {
         sendLine('bleh');
     });
 
-    it('should work (using promise)', function (next) {
+    it('should work using promise', function (next) {
         promptly.confirm('yes or no? ')
             .then(function (value) {
                 expect(stdout).to.contain('yes or no? ');
@@ -382,22 +333,6 @@ describe('confirm()', function () {
             });
 
         sendLine('y');
-    });
-
-    it('should error on invalid choice if retry is disabled (using promise)', function (next) {
-        promptly.confirm('yes or no? ', { retry: false })
-            .then(function () {
-                expect().fail();
-                next();
-            })
-            .catch(function (err) {
-                expect(err).to.be.an(Error);
-                expect(err.message).to.not.contain('Invalid choice');
-                expect(stdout).to.contain('yes or no? ');
-                next();
-            });
-
-        sendLine('bleh');
     });
 });
 
@@ -437,7 +372,7 @@ describe('password()', function () {
         sendLine('');
     });
 
-    it('should prompt the user silently (using promise)', function (next) {
+    it('should prompt the user silently using promise', function (next) {
         promptly.password('something: ')
             .then(function (value) {
                 expect(value).to.be('yeaa');
