@@ -3,22 +3,7 @@
 var read = require('read');
 var promptly = module.exports;
 
-promptly.prompt = function (message, opts, fn) {
-    // Arguments parsing
-    if (typeof opts === 'function') {
-        fn = opts;
-        opts = {};
-    } else if (!opts) {
-        opts = {};
-    }
-
-    if (opts.trim === undefined) {
-        opts.trim = true;
-    }
-    if (opts.retry === undefined) {
-        opts.retry = true;
-    }
-
+function prompt(message, opts, fn) {
     // Setup read's options
     var readOpts = {
         prompt: message,
@@ -79,6 +64,37 @@ promptly.prompt = function (message, opts, fn) {
         // Everything ok
         fn(null, data);
     });
+}
+
+promptly.prompt = function (message, opts, fn) {
+    // Arguments parsing
+    if (typeof opts === 'function') {
+        fn = opts;
+        opts = {};
+    } else if (!opts) {
+        opts = {};
+    }
+
+    if (opts.trim === undefined) {
+        opts.trim = true;
+    }
+    if (opts.retry === undefined) {
+        opts.retry = true;
+    }
+
+    if (fn) {
+        return prompt(message, opts, fn);
+    }
+
+    return new Promise(function (resolve, reject) {
+        prompt(message, opts, function (err, result) {
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(result);
+        });
+    });
 };
 
 promptly.password = function (message, opts, fn) {
@@ -102,7 +118,7 @@ promptly.password = function (message, opts, fn) {
     }
 
     // Use prompt()
-    promptly.prompt(message, opts, fn);
+    return promptly.prompt(message, opts, fn);
 };
 
 promptly.confirm = function (message, opts, fn) {
@@ -143,7 +159,7 @@ promptly.confirm = function (message, opts, fn) {
     opts.validator.push(validator);
 
     // Use choose() with true, false
-    promptly.choose(message, [true, false], opts, fn);
+    return promptly.choose(message, [true, false], opts, fn);
 };
 
 promptly.choose = function (message, choices, opts, fn) {
@@ -176,5 +192,5 @@ promptly.choose = function (message, choices, opts, fn) {
     opts.validator.push(validator);
 
     // Use prompt()
-    promptly.prompt(message, opts, fn);
+    return promptly.prompt(message, opts, fn);
 };

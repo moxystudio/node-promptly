@@ -22,10 +22,10 @@ Simple command line prompting utility.
 
 ## API
 
-### .prompt(message, [opts], fn)
+### .prompt(message, [opts], [fn])
 
 Prompts for a value, printing the `message` and waiting for the input.   
-When done, calls `fn` with `error` and `value`.
+When done, calls `fn` with `error` and `value`. Or returns with `Promise` if no `fn` is provided.
 
 Default options:
 ```js
@@ -47,6 +47,7 @@ Default options:
 ```
 
 The validators have two purposes:
+
 ```js
 function (value) {
     // Validation example, throwing an error when invalid
@@ -62,11 +63,22 @@ function (value) {
 Example usages
 
 Ask for a name:
+
 ```js
 promptly.prompt('Name: ', function (err, value) {
     // err is always null in this case, because no validators are set
     console.log(value);
 });
+```
+
+Using Promise:
+
+```js
+promptly.prompt('Name: ')
+.then(function (value) {
+    // no need for catch in this case, because no validators are set
+    console.log(value);
+})
 ```
 
 Ask for a name with a constraint (non-empty value and length > 2):
@@ -101,7 +113,7 @@ var validator = function (value) {
 
 promptly.prompt('Name: ', { validator: validator, retry: false }, function (err, value) {
     if (err) {
-        console.error('Invalid name:', e.message);
+        console.error('Invalid name:', err.message);
         // Manually call retry
         // The passed error has a retry method to easily prompt again.
         return err.retry();

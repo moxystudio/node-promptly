@@ -189,6 +189,21 @@ describe('prompt()', function () {
 
         sendLine('yeaa');
     });
+
+    it('should prompt the user (using promise)', function (next) {
+        promptly.prompt('something: ')
+        .then(function (value) {
+            expect(value).to.be('yeaa');
+            expect(stdout).to.contain('something: ');
+            next();
+        })
+        .catch(function () {
+            expect().fail();
+            next();
+        });
+
+        sendLine('yeaa');
+    });
 });
 
 describe('choose()', function () {
@@ -238,6 +253,21 @@ describe('choose()', function () {
         });
 
         sendLine('1');
+    });
+
+    it('should work using promise', function (next) {
+        promptly.choose('apple or orange? ', ['apple', 'orange'])
+            .then(function (value) {
+                expect(value).to.be('orange');
+                expect(stdout).to.contain('apple or orange? ');
+                next();
+            })
+            .catch(function () {
+                expect().fail();
+                next();
+            });
+
+        sendLine('orange');
     });
 });
 
@@ -289,6 +319,21 @@ describe('confirm()', function () {
 
         sendLine('bleh');
     });
+
+    it('should work using promise', function (next) {
+        promptly.confirm('yes or no? ')
+            .then(function (value) {
+                expect(stdout).to.contain('yes or no? ');
+                expect(value).to.be(true);
+                next();
+            })
+            .catch(function () {
+                expect().fail();
+                next();
+            });
+
+        sendLine('y');
+    });
 });
 
 describe('password()', function () {
@@ -325,5 +370,21 @@ describe('password()', function () {
         });
 
         sendLine('');
+    });
+
+    it('should prompt the user silently using promise', function (next) {
+        promptly.password('something: ')
+            .then(function (value) {
+                expect(value).to.be('yeaa');
+                expect(stdout).to.contain('something: ');
+                expect(stdout).to.not.contain('yeaa');
+                next();
+            })
+            .catch(function () {
+                expect().fail();
+                next();
+            });
+
+        sendLine('yeaa');
     });
 });
