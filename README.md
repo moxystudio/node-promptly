@@ -25,7 +25,7 @@ Simple command line prompting utility.
 ### .prompt(message, [opts], [fn])
 
 Prompts for a value, printing the `message` and waiting for the input.   
-When done, calls `fn` with `error` and `value`. Or returns with `Promise` if no `fn` is provided.
+When done, calls `fn` with `error` and `value` or returns a `Promise` if no `fn` is provided.
 
 Default options:
 ```js
@@ -78,7 +78,7 @@ promptly.prompt('Name: ')
 .then(function (value) {
     // no need for catch in this case, because no validators are set
     console.log(value);
-})
+});
 ```
 
 Ask for a name with a constraint (non-empty value and length > 2):
