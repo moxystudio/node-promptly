@@ -9,7 +9,8 @@ function prompt(message, opts, fn) {
         prompt: message,
         input: opts.input || process.stdin,
         output: opts.output || process.stdout,
-        silent: opts.silent
+        silent: opts.silent,
+        replace: opts.replace || ''
     };
 
     // Use readline question
