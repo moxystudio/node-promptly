@@ -40,6 +40,8 @@ Default options:
     'retry': true,
     // Do not print what the user types
     'silent': false,
+    // Replace each character with the specified string when 'silent' is true
+    'replace': '',
     // Input and output streams to read and write to
     'input': process.stdin,
     'output': process.stdout
@@ -165,7 +167,7 @@ The available options are the same, except that `trim` and `silent` default to `
 Example usage:
 
 ```js
-promptly.password('Type a password: ', function (err, value) {
+promptly.password('Type a password: ', { replace: '*' }, function (err, value) {
     console.log('Password is:', value);
 });
 ```
