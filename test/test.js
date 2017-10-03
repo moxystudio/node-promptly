@@ -178,7 +178,7 @@ describe('prompt()', function () {
         sendLine('yeaa');
     });
 
-    it('should write input to stdout if silent is false', function (next) {
+    it('should write input to stdout if silent is true', function (next) {
         promptly.prompt('something: ', { silent: true }, function (err, value) {
             expect(err).to.be(null);
             expect(value).to.be('yeaa');
