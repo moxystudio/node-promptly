@@ -1,197 +1,72 @@
 'use strict';
 
-var read = require('read');
-var promptly = module.exports;
+const prompt = require('./lib/prompt');
+const getOptions = require('./lib/getOptions');
 
-function prompt(message, opts, fn) {
-    // Setup read's options
-    var readOpts = {
-        prompt: message,
-        input: opts.input || process.stdin,
-        output: opts.output || process.stdout,
-        silent: opts.silent,
-        replace: opts.replace || ''
-    };
+const promptly = module.exports;
 
-    // Use readline question
-    read(readOpts, function (err, data) {
-        // Ignore the error attribute
-        // It is set on SIGINT or if timeout reached (we are not using timeout)
-        if (err) {
-            return;
-        }
+promptly.prompt = (message, options) => {
+    options = getOptions(options);
 
-        // Trim?
-        if (opts.trim) {
-            data = data.trim();
-        }
-
-        // Mandatory?
-        if (opts['default'] == null && !data) {
-            return promptly.prompt(message, opts, fn);
-        } else {
-            data = data || opts['default'];
-        }
-
-        // Validator verification
-        if (opts.validator) {
-            if (!Array.isArray(opts.validator)) {
-                opts.validator = [opts.validator];
-            }
-
-            var x;
-            var length = opts.validator.length;
-
-            for (x = 0; x < length; x += 1) {
-                try {
-                    data = opts.validator[x](data);
-                } catch (e) {
-                    // Retry automatically if the retry option is enabled
-                    if (opts.retry) {
-                        if (e.message) {
-                            readOpts.output.write(e.message + '\n');
-                        }
-
-                        return promptly.prompt(message, opts, fn);
-                    }
-
-                    e.retry = promptly.prompt.bind(promptly, message, opts, fn);
-
-                    return fn(e);
-                }
-            }
-        }
-
-        // Everything ok
-        fn(null, data);
-    });
-}
-
-promptly.prompt = function (message, opts, fn) {
-    // Arguments parsing
-    if (typeof opts === 'function') {
-        fn = opts;
-        opts = {};
-    } else if (!opts) {
-        opts = {};
-    }
-
-    if (opts.trim === undefined) {
-        opts.trim = true;
-    }
-    if (opts.retry === undefined) {
-        opts.retry = true;
-    }
-
-    if (fn) {
-        return prompt(message, opts, fn);
-    }
-
-    return new Promise(function (resolve, reject) {
-        prompt(message, opts, function (err, result) {
-            if (err) {
-                return reject(err);
-            }
-
-            resolve(result);
-        });
-    });
+    return prompt(message, options);
 };
 
-promptly.password = function (message, opts, fn) {
-    // Arguments parsing
-    if (typeof opts === 'function') {
-        fn = opts;
-        opts = {};
-    } else {
-        opts = opts || {};
-    }
+promptly.password = (message, options) => {
+    options = getOptions({
+        silent: true, // Hide password chars
+        trim: false, // Do not trim so that spaces can be part of the password
+        default: '', // Allow empty passwords
+        ...options,
+    });
 
-    // Set default options
-    if (opts.silent === undefined) {
-        opts.silent = true;
-    }
-    if (opts.trim === undefined) {
-        opts.trim = false;
-    }
-    if (opts['default'] === undefined) {
-        opts['default'] = '';
-    }
-
-    // Use prompt()
-    return promptly.prompt(message, opts, fn);
+    return prompt(message, options);
 };
 
-promptly.confirm = function (message, opts, fn) {
-    // Arguments parsing
-    if (typeof opts === 'function') {
-        fn = opts;
-        opts = {};
-    } else if (!opts) {
-        opts = {};
-    }
+promptly.confirm = (message, options) => {
+    options = getOptions({
+        trim: false, // Do not trim so that only exact matches pass the validator
+        ...options,
+    });
 
-    opts.validator = opts.validator || [];
-    if (!Array.isArray(opts.validator)) {
-        opts.validator = [opts.validator];
-    }
-
-    // Push the validator that will coerse boolean values
-    var validator = function (value) {
-        if (typeof value === 'string') {
-            value = value.toLowerCase();
-        }
+    // Unshift the validator that will coerse boolean values
+    options.validator.unshift((value) => {
+        value = value.toLowerCase();
 
         switch (value) {
         case 'y':
         case 'yes':
         case '1':
-        case true:
             return true;
         case 'n':
         case 'no':
         case '0':
-        case false:
             return false;
+        default:
+            throw new Error(`Invalid choice: ${value}`);
         }
+    });
 
-        throw new Error();
-    };
-    opts.validator.push(validator);
-
-    // Use choose() with true, false
-    return promptly.choose(message, [true, false], opts, fn);
+    return prompt(message, options);
 };
 
-promptly.choose = function (message, choices, opts, fn) {
-    // Arguments parsing
-    if (typeof opts === 'function') {
-        fn = opts;
-        opts = {};
-    } else if (!opts) {
-        opts = {};
-    }
+promptly.choose = (message, choices, options) => {
+    options = getOptions({
+        trim: false, // Do not trim so that only exact matches pass the validator
+        ...options,
+    });
 
-    opts.validator = opts.validator || [];
-    if (!Array.isArray(opts.validator)) {
-        opts.validator = [opts.validator];
-    }
+    // Unshift the validator that will validate the data against the choices
+    options.validator.unshift((value) => {
+        // Check if the value exists by comparing values loosely
+        // Additionally, use the coorced value
+        const index = choices.findIndex((choice) => value == choice); // eslint-disable-line eqeqeq
 
-    // Push the choice validator
-    var nrChoices = choices.length;
-    var validator = function (value) {
-        var x;
-
-        for (x = 0; x < nrChoices; x++) {
-            if (choices[x] == value) {
-                return choices[x];
-            }
+        if (index === -1) {
+            throw new Error(`Invalid choice: ${value}`);
         }
 
-        throw new Error('Invalid choice: ' + value);
-    };
-    opts.validator.push(validator);
+        return choices[index];
+    });
 
-    // Use prompt()
-    return promptly.prompt(message, opts, fn);
+    return prompt(message, options);
 };
