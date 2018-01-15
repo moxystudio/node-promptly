@@ -119,7 +119,7 @@ Returns a promise that resolves with the answer.
 Truthy values are: `y`, `yes` and `1`. Falsy values are `n`, `no`, and `0`.   
 Comparison is made in a case insensitive way.
 
-The same options from [prompt](#promptmessage-options) are available.
+The options are the same as [prompt](#promptmessage-options), except that `trim` defaults to `false`.
 
 #### Examples
 
@@ -136,7 +136,7 @@ The same options from [prompt](#promptmessage-options) are available.
 Ask the user to choose between multiple `choices` (array of choices), printing the `message` and waiting for the input.   
 Returns a promise that resolves with the choice.
 
-The same options from [prompt](#promptmessage-options) are available.
+The options are the same as [prompt](#promptmessage-options), except that `trim` defaults to `false`.
 
 #### Examples
 
@@ -153,7 +153,7 @@ The same options from [prompt](#promptmessage-options) are available.
 Prompts for a password, printing the `message` and waiting for the input.   
 Returns a promise that resolves with the password.
 
-The same options from [prompt](#promptmessage-options) are available, except that `trim` and `silent` default to `false` and `default` is  an empty string to allow empty passwords.
+The options are the same as [prompt](#promptmessage-options), except that `trim` and `silent` default to `false` and `default` is an empty string (to allow empty passwords).
 
 #### Examples
 
