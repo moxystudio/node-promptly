@@ -97,7 +97,7 @@ The same **options** are available to **all functions** but with different defau
 
 #### Validators
 
-The validators have two purposes: to validate and to transform input.
+The validators have two purposes: to check and transform input.
 
 ```js
 (value) => {
@@ -113,7 +113,7 @@ The validators have two purposes: to validate and to transform input.
 
 ### .confirm(message, [options])
 
-Ask the user for confirmation, printing the `message` and waiting for the input.
+Ask the user for confirmation, printing the `message` and waiting for the input.   
 Returns a promise that resolves with the answer.
 
 Truthy values are: `y`, `yes` and `1`. Falsy values are `n`, `no`, and `0`.   
