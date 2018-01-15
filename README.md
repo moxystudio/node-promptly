@@ -37,7 +37,7 @@ Available options:
 | ------ | ------------- | -------- | ------- |
 | default | The default value to use if the user provided an empty input | string | undefined |
 | trim | Trims the user input | boolean | true |
-| validator | A validator or an array of validators | Function/Array | undefined |
+| validator | A validator or an array of validators | function/array | undefined |
 | retry | Retry if any of the validators fail | boolean | true |
 | silent | Do not print what the user types | boolean | false |
 | replace | Replace each character with the specified string when `silent` is true | string | '' |
