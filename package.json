@@ -1,6 +1,6 @@
 {
   "name": "promptly",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Simple command line prompting utility",
   "keywords": [
     "prompt",
