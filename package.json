@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "test": "jest --env node --coverage --runInBand",
+    "test": "jest --env node --coverage",
     "prerelease": "npm t && npm run lint",
     "release": "standard-version",
     "precommit": "lint-staged",
