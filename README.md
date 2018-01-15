@@ -8,7 +8,7 @@
 [travis-url]:https://travis-ci.org/moxystudio/node-promptly
 [travis-image]:http://img.shields.io/travis/moxystudio/node-promptly/master.svg
 [codecov-url]:https://codecov.io/gh/moxystudio/node-promptly
-[codecov-image]:https://img.shields.io/codecov/c/github/moxystudio/node-ppromptly/master.svg
+[codecov-image]:https://img.shields.io/codecov/c/github/moxystudio/node-promptly/master.svg
 [david-dm-url]:https://david-dm.org/moxystudio/node-promptly
 [david-dm-image]:https://img.shields.io/david/moxystudio/node-promptly.svg
 [david-dm-dev-url]:https://david-dm.org/moxystudio/node-promptly?type=dev
