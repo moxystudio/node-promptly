@@ -86,7 +86,7 @@ The same **options** are available to **all functions** but with different defau
     };
 
     try {
-        const name = promptly.prompt('Name: ', { validator, retry: false });
+        const name = await promptly.prompt('Name: ', { validator, retry: false });
 
         console.log('Name is:', value);
     } catch (err) {
@@ -143,7 +143,7 @@ The same options from [prompt](#promptmessage-options) are available.
 - Ask to choose between:
 
     ```js
-    const choice = promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange']);
+    const choice = await promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange']);
 
     console.log('Choice:', choice);
     ```
@@ -160,7 +160,7 @@ The same options from [prompt](#promptmessage-options) are available, except tha
 - Ask for a password:
 
     ```js
-    const password = promptly.password('Type a password: ');
+    const password = await promptly.password('Type a password: ');
 
     console.log('Password:', password);
     ```
@@ -168,7 +168,7 @@ The same options from [prompt](#promptmessage-options) are available, except tha
 - Ask for a password but mask the input with `*`:
 
     ```js
-    const password = promptly.password('Type a password: ', { replace: '*' });
+    const password = await promptly.password('Type a password: ', { replace: '*' });
 
     console.log('Password:', password);
     ```
