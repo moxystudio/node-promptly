@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### BREAKING CHANGES
 
+* remove support for old node versions (only latest lts or higher is supported)
 * callback support has been removed
 * ability to call error.retry has been removed
 * built-in choice and confirm validators now run before any custom validators
