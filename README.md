@@ -173,6 +173,10 @@ The options are the same as [prompt](#promptmessage-options), except that `trim`
     console.log('Password:', password);
     ```
 
+## Tests
+
+`$ npm test`   
+`$ npm test -- --watch` during development
 
 ## License
 
