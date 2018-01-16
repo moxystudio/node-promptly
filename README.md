@@ -178,6 +178,7 @@ The options are the same as [prompt](#promptmessage-options), except that `trim`
 `$ npm test`   
 `$ npm test -- --watch` during development
 
+
 ## License
 
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
