@@ -46,6 +46,7 @@
     ]
   },
   "dependencies": {
+    "pify": "^3.0.0",
     "read": "^1.0.4",
     "strip-ansi": "^4.0.0"
   },
