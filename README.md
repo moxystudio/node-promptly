@@ -16,7 +16,7 @@
 [greenkeeper-image]:https://badges.greenkeeper.io/moxystudio/node-promptly.svg
 [greenkeeper-url]:https://greenkeeper.io/
 
-Simple command line prompting utility.
+> Simple command line prompting utility.
 
 
 ## Installation
@@ -51,14 +51,19 @@ The same **options** are available to **all functions** but with different defau
 - Ask for a name:
 
     ```js
-    const name = await promptly.prompt('Name: ');
+    const promptly = require('promptly');
 
-    console.log(name);
+    (async () => {
+        const name = await promptly.prompt('Name: ');
+        console.log(name);
+    })();
     ```
 
 - Ask for a name with a constraint (non-empty value and length > 2):
 
     ```js
+    const promptly = require('promptly');
+
     const validator = function (value) {
         if (value.length < 2) {
             throw new Error('Min length of 2');
@@ -67,17 +72,21 @@ The same **options** are available to **all functions** but with different defau
         return value;
     };
 
-    const name = await promptly.prompt('Name: ', { validator });
-
-    // Since retry is true by default, promptly will keep asking for a name until it is valid
-    // Between each prompt, the error message from the validator will be printed
-    console.log('Name is:', value);
+    (async () => {
+        const name = await promptly.prompt('Name: ', { validator });
+        // Since retry is true by default, promptly will keep asking for a name until it is valid
+        // Between each prompt, the error message from the validator will be printed
+        console.log('Name is:', name);
+    })();
+    
     ```
 
 - Same as above but do not retry automatically:
 
     ```js
-    var validator = function (value) {
+    const promptly = require('promptly');
+
+    const validator = function (value) {
         if (value.length < 2) {
             throw new Error('Min length of 2');
         }
@@ -85,14 +94,15 @@ The same **options** are available to **all functions** but with different defau
         return value;
     };
 
-    try {
-        const name = await promptly.prompt('Name: ', { validator, retry: false });
-
-        console.log('Name is:', value);
-    } catch (err) {
-        console.error('Invalid name:')
-        console.error(`- ${err.message}`);
-    }
+    (async () => {
+        try {
+            const name = await promptly.prompt('Name: ', { validator, retry: false });
+            console.log('Name is:', name);
+        } catch (err) {
+            console.error('Invalid name:')
+            console.error(`- ${err.message}`);
+        }
+    })();
     ```
 
 #### Validators
@@ -100,7 +110,7 @@ The same **options** are available to **all functions** but with different defau
 The validators have two purposes: to check and transform input.
 
 ```js
-(value) => {
+const validator = (value) => {
     // Validation example, throwing an error when invalid
     if (value.length !== 2) {
         throw new Error('Length must be 2');
@@ -126,9 +136,13 @@ The options are the same as [prompt](#promptmessage-options), except that `trim`
 - Ask to confirm something important:
 
     ```js
-    const answer = await promptly.confirm('Are you really sure? ');
+    const promptly = require('promptly');
 
-    console.log('Answer:', answer);
+    (async () => {
+        const answer = await promptly.confirm('Are you really sure? ');
+
+        console.log('Answer:', answer);
+    })();
     ```
 
 ### .choose(message, choices, [options])
@@ -143,9 +157,13 @@ The options are the same as [prompt](#promptmessage-options), except that `trim`
 - Ask to choose between:
 
     ```js
-    const choice = await promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange']);
+    const promptly = require('promptly');
 
-    console.log('Choice:', choice);
+    (async () => {
+        const choice = await promptly.choose('Do you want an apple or an orange? ', ['apple', 'orange']);
+
+        console.log('Choice:', choice);
+    })();
     ```
 
 ### .password(message, [options])
@@ -160,17 +178,25 @@ The options are the same as [prompt](#promptmessage-options), except that `trim`
 - Ask for a password:
 
     ```js
-    const password = await promptly.password('Type a password: ');
+    const promptly = require('promptly');
 
-    console.log('Password:', password);
+    (async () => {
+        const password = await promptly.password('Type a password: ');
+
+        console.log('Password:', password);
+    })();
     ```
 
 - Ask for a password but mask the input with `*`:
 
     ```js
-    const password = await promptly.password('Type a password: ', { replace: '*' });
+    const promptly = require('promptly');
 
-    console.log('Password:', password);
+    (async () => {
+        const password = await promptly.password('Type a password: ', { replace: '*' });
+
+        console.log('Password:', password);
+    })();
     ```
 
 ## Tests
