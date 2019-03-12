@@ -25,9 +25,13 @@
     "lint": "eslint .",
     "test": "jest --env node --coverage",
     "prerelease": "npm t && npm run lint",
-    "release": "standard-version",
-    "precommit": "lint-staged",
-    "commitmsg": "commitlint -e $GIT_PARAMS"
+    "release": "standard-version"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
   "standard-version": {
     "scripts": {
@@ -52,11 +56,11 @@
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "eslint": "^5.3.0",
-    "eslint-config-moxy": "^6.0.1",
-    "husky": "^0.14.3",
-    "jest": "^23.4.2",
-    "lint-staged": "^7.0.0",
-    "p-series": "^1.1.0",
-    "standard-version": "^4.4.0"
+    "eslint-config-moxy": "^7.0.1",
+    "husky": "^1.3.1",
+    "jest": "^24.5.0",
+    "lint-staged": "^8.1.5",
+    "p-series": "^2.0.0",
+    "standard-version": "^5.0.1"
   }
 }
