@@ -190,3 +190,20 @@ it('should write input using options.replace to stdout if silent is enabled', as
     expect(process.stdout.write).toHaveBeenCalledWith('a');
     expect(process.stdout.write).not.toHaveBeenCalledWith('z');
 });
+
+it('should timeout if user is not fast enough', async () => {
+    process.stdout.write.mockClear();
+    await expect(promptly.prompt('prompt: [{timeout}s] ', { timeout: 2 })).rejects.toEqual(new Error('timed out'));
+    expect(writeIndexOf('prompt: [2s] ')).toBe(2);
+    expect(writeIndexOf('prompt: [1s] ')).toBe(6);
+    process.stdout.write.mockClear();
+});
+
+it('should take default value if timed out', async () => {
+    expect(await promptly.prompt('prompt: [{timeout}s] ', { timeout: 1, default: 'plop' })).toEqual('plop');
+});
+
+it('should take input value if not timed out', async () => {
+    sendLine('plop2', 300);
+    expect(await promptly.prompt('prompt: [{timeout}s] ', { timeout: 2, default: 'plop' })).toEqual('plop2');
+});
