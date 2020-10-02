@@ -41,7 +41,7 @@ Available options:
 | replace | Replace each character with the specified string when `silent` is true | string | '' |
 | input | Input stream to read from | [Stream](https://nodejs.org/api/process.html#process_process_stdin) | process.stdin |
 | output | Output stream to write to | [Stream](https://nodejs.org/api/process.html#process_process_stdout) | process.stdout |
-| timeout | Timeout in seconds | number | 0 |
+| timeout | Timeout in ms | number | 0 |
 
 The same **options** are available to **all functions** but with different default values.
 
@@ -110,16 +110,9 @@ The same **options** are available to **all functions** but with different defau
     const promptly = require('promptly');
 
     (async () => {
-        const name = await promptly.prompt('Name [{timeout}s]: ', { timeout: 3 });
+        const name = await promptly.prompt('Name: ', { timeout: 3000 });
         console.log(name);
     })();
-    ```
-
-    It will display (on the same line):
-    ```
-    Name [3s]:
-    Name [2s]:
-    Name [1s]:
     ```
 
     It throws an `Error("timed out")` if timeout is reached and no default value is provided
