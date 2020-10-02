@@ -195,8 +195,12 @@ it('should timeout if user is not fast enough', async () => {
     await expect(promptly.prompt('prompt: ', { timeout: 10 })).rejects.toEqual(new Error('timed out'));
 });
 
+it('should take default value if timed out with timeoutToDefault', async () => {
+    expect(await promptly.prompt('prompt: ', { timeout: 10, default: 'plop', timeoutToDefault: true })).toEqual('plop');
+});
+
 it('should take default value if timed out', async () => {
-    expect(await promptly.prompt('prompt: ', { timeout: 10, default: 'plop' })).toEqual('plop');
+    await expect(promptly.prompt('prompt: ', { timeout: 10, default: 'plop' })).rejects.toEqual(new Error('timed out'));
 });
 
 it('should take input value if not timed out', async () => {
