@@ -42,7 +42,7 @@ Available options:
 | input | Input stream to read from | [Stream](https://nodejs.org/api/process.html#process_process_stdin) | process.stdin |
 | output | Output stream to write to | [Stream](https://nodejs.org/api/process.html#process_process_stdout) | process.stdout |
 | timeout | Timeout in ms | number | 0 |
-| timeoutToDefault | Return default value if timed out | boolean | false |
+| useDefaultOnTimeout | Return default value if timed out | boolean | false |
 
 The same **options** are available to **all functions** but with different default values.
 
