@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/moxystudio/node-promptly/compare/v3.0.3...v3.1.0) (2020-10-07)
+
+
+### Features
+
+* add timeout option to prompt (Close [#37](https://github.com/moxystudio/node-promptly/issues/37)) ([#38](https://github.com/moxystudio/node-promptly/issues/38)) ([3b84dd5](https://github.com/moxystudio/node-promptly/commit/3b84dd5))
+
+
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/moxystudio/node-promptly/compare/v3.0.2...v3.0.3) (2018-01-17)
 
