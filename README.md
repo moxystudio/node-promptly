@@ -41,6 +41,8 @@ Available options:
 | replace | Replace each character with the specified string when `silent` is true | string | '' |
 | input | Input stream to read from | [Stream](https://nodejs.org/api/process.html#process_process_stdin) | process.stdin |
 | output | Output stream to write to | [Stream](https://nodejs.org/api/process.html#process_process_stdout) | process.stdout |
+| timeout | Timeout in ms | number | 0 |
+| useDefaultOnTimeout | Return default value if timed out | boolean | false |
 
 The same **options** are available to **all functions** but with different default values.
 
@@ -102,6 +104,19 @@ The same **options** are available to **all functions** but with different defau
         }
     })();
     ```
+
+- Ask for a name with timeout:
+
+    ```js
+    const promptly = require('promptly');
+
+    (async () => {
+        const name = await promptly.prompt('Name: ', { timeout: 3000 });
+        console.log(name);
+    })();
+    ```
+
+    It throws an `Error("timed out")` if timeout is reached and no default value is provided
 
 #### Validators
 
