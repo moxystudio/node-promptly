@@ -208,3 +208,23 @@ it('should take input value if not timed out', async () => {
     sendLine('plop2', 10);
     expect(await promptly.prompt('prompt: ', { timeout: 20, default: 'plop' })).toEqual('plop2');
 });
+
+it('should allow async validator', async () => {
+    sendLine('plop');
+    expect(await promptly.prompt('prompt: ', { validator: async () => 'fixed' })).toEqual('fixed');
+});
+
+it('should allow async validator error', async () => {
+    let called = false;
+    const validator = async (val) => {
+        if (!called) {
+            called = true;
+            throw new Error('Not valid');
+        }
+
+        return val;
+    };
+
+    sendLine('plop');
+    expect(await promptly.prompt('prompt: ', { default: 'fixed', timeout: 10, useDefaultOnTimeout: true, validator })).toEqual('fixed');
+});
