@@ -120,7 +120,7 @@ The same **options** are available to **all functions** but with different defau
 
 #### Validators
 
-The validators have two purposes: to check and transform input.
+The validators have two purposes: to check and transform input. They can be asynchronous or synchronous
 
 ```js
 const validator = (value) => {
@@ -131,6 +131,11 @@ const validator = (value) => {
 
     // Parse the value, modifying it
     return value.replace('aa', 'bb');
+}
+
+const asyncValidator = async (value) => {
+    await myfunc();
+    return value;
 }
 ```
 
