@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/moxystudio/node-promptly/compare/v3.1.0...v3.2.0) (2020-11-06)
+
+
+### Features
+
+* add async validator test (Close [#39](https://github.com/moxystudio/node-promptly/issues/39)) ([#40](https://github.com/moxystudio/node-promptly/issues/40)) ([917930b](https://github.com/moxystudio/node-promptly/commit/917930b))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/moxystudio/node-promptly/compare/v3.0.3...v3.1.0) (2020-10-07)
 
